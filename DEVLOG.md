@@ -1,6 +1,6 @@
 ## Day 1 — 2026-05-20
 
-**Hours worked:** 3
+**Hours worked:** need to update
 
 **What I did:**
 - Created GitHub repository ai-spend-audit
