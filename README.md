@@ -5,7 +5,8 @@ find out if they are overspending on AI tools like ChatGPT, Cursor,
 Claude, and GitHub Copilot — and shows exactly how much they can save.
 
 ## Live URL
-[Coming soon — deploying on Vercel]
+
+https://ai-spend-audit-eta-lime.vercel.app
 
 ## Screenshots
 Coming soon
