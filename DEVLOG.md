@@ -54,3 +54,34 @@
 * Build the AI spend input form
 * Add tool selection and pricing inputs
 * Start implementing localStorage persistence
+
+
+## Day 3 — 2026-05-22
+
+**Hours worked:** 5
+
+**What I did:**
+* Built the AI spend audit input form UI
+* Added fields for team size and primary use case
+* Implemented validation for required form inputs
+* Improved the landing page UI and overall visual consistency
+* Refined spacing, typography, responsiveness, and reusable UI components
+* Explored Supabase setup and backend integration flow
+* Created and configured environment variables using a `.env` file for Supabase keys and project setup
+* Made multiple small UI and structure improvements across the project
+
+**What I learned:**
+* How to structure and manage larger React forms effectively
+* Better understanding of form validation and controlled inputs
+* Importance of secure environment variable handling
+* Basics of integrating Supabase with a frontend application
+
+**Blockers / what I'm stuck on:**
+* Need to connect form inputs with audit calculation logic
+* Need to finalize recommendation rules and pricing structure
+
+**Plan for tomorrow:**
+* Build the audit engine logic
+* Calculate monthly and yearly savings
+* Generate recommendation cards based on user inputs
+* Start connecting form data to the results page

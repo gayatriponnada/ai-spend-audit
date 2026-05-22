@@ -1,3 +1,6 @@
+@plugin "daisyui" {
+  themes: light --default, autumn;
+}
 
 @utility h-full-screen {
   height: 100%;
