@@ -16,9 +16,14 @@ const Navbar = () => {
           AI Spend Audit
         </div>
       </div>
-      <button className="bg-primary cursor-pointer p-2 rounded-lg text-white text-sm tracking-wide">
-        Start Free Audit
-      </button>
+      {location.pathname === "/" && (
+        <button
+          className="bg-primary cursor-pointer p-2 rounded-lg text-white text-sm tracking-wide"
+          onClick={() => navigate("/audit")}
+        >
+          Start Free Audit
+        </button>
+      )}
     </div>
   );
 };
