@@ -1,23 +1,14 @@
 import { useState, useEffect } from "react";
 import { TOOLS, USE_CASES } from "../engine/pricingData";
 
-const DEFAULT_FORM = {
-  teamSize: "",
-  useCase: "",
-  tools: {},
-};
-
 export default function AuditForm() {
-  const [form, setForm] = useState(() => {
-    const saved = localStorage.getItem("auditForm");
-    return saved ? JSON.parse(saved) : DEFAULT_FORM;
-  });
+  const [form, setForm] = useState({ teamSize: "", useCase: "", tools: {} });
 
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    localStorage.setItem("auditForm", JSON.stringify(form));
-  }, [form]);
+  // useEffect(() => {
+  //   localStorage.setItem("auditForm", JSON.stringify(form));
+  // }, [form]);
 
   const handleToolToggle = (toolId) => {
     setForm((prev) => {
@@ -25,7 +16,7 @@ export default function AuditForm() {
       if (tools[toolId]) {
         delete tools[toolId];
       } else {
-        tools[toolId] = { planId: "", seats: 1, monthlySpend: "" };
+        tools[toolId] = { planId: "", seats: "", monthlySpend: "" };
       }
       return { ...prev, tools };
     });
@@ -42,36 +33,66 @@ export default function AuditForm() {
   };
 
   const handleSubmit = () => {
-    console.log("clicked");
     if (!validate()) {
-      console.log("required");
       return;
     }
+    console.log("form", form);
     // if (Object.keys(form.tools).length === 0) {
     //   alert("Please select at least one AI tool");
     //   return;
     // }
+    setForm({});
   };
 
   const validate = () => {
     const newError = {};
 
     if (!form.teamSize) {
-      newError.teamSize = "teamSize is required";
+      newError.teamSize = "Team size is required";
     }
 
     if (!form.useCase) {
-      newError.useCase = "Primary useCase is required";
+      newError.useCase = "Primary use case is required";
     }
+
     if (Object.keys(form.tools).length === 0) {
-      newError.tools = " Please select at least one AI tool";
+      newError.tools = "Please select at least one AI tool";
+    }
+
+    // Tool validations
+    const toolErrors = {};
+
+    Object.keys(form.tools || {}).forEach((toolId) => {
+      const toolData = form.tools[toolId];
+
+      const currentToolErrors = {};
+
+      if (!toolData.planId) {
+        currentToolErrors.planId = "Plan is required";
+      }
+
+      if (!toolData.seats) {
+        currentToolErrors.seats = "Seats are required";
+      }
+
+      if (!toolData.monthlySpend) {
+        currentToolErrors.monthlySpend = "Monthly spend is required";
+      }
+
+      // Save errors only if this tool has errors
+      if (Object.keys(currentToolErrors).length > 0) {
+        toolErrors[toolId] = currentToolErrors;
+      }
+    });
+
+    if (Object.keys(toolErrors).length > 0) {
+      newError.toolData = toolErrors;
     }
 
     setErrors(newError);
 
     return Object.keys(newError).length === 0;
   };
-
   return (
     <div className="flex flex-col items-center   gap-4  ">
       <div className="flex flex-col   gap-4 ">
@@ -97,7 +118,7 @@ export default function AuditForm() {
                 type="number"
                 min="1"
                 placeholder="e.g. 5"
-                value={form.teamSize}
+                value={form.teamSize || ""}
                 onChange={(e) =>
                   setForm((p) => ({ ...p, teamSize: e.target.value }))
                 }
@@ -114,18 +135,26 @@ export default function AuditForm() {
                 Primary Use Case
               </label>
               <select
-                value={form.useCase}
+                value={form.useCase || ""}
                 onChange={(e) =>
                   setForm((p) => ({ ...p, useCase: e.target.value }))
                 }
                 className="select select-primary"
               >
+                <option value="" disabled>
+                  Select one Usecase
+                </option>
                 {USE_CASES.map((u) => (
                   <option key={u.id} value={u.id}>
                     {u.name}
                   </option>
                 ))}
               </select>
+              {errors.useCase && (
+                <p className="text-red-400 text-xs font-normal">
+                  {errors.useCase}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -140,16 +169,16 @@ export default function AuditForm() {
           <div className="grid grid-cols-2 gap-3 ">
             {TOOLS.map((tool) => (
               <button
-                key={tool.id}
-                onClick={() => handleToolToggle(tool.id)}
+                key={tool?.id}
+                onClick={() => handleToolToggle(tool?.id)}
                 className={`p-3 rounded-lg border text-left text-sm font-medium transition
-                ${
-                  form.tools[tool.id]
-                    ? "border-blue-500 bg-blue-50 text-blue-700"
-                    : "border-gray-200 text-gray-700 hover:border-gray-300"
-                }`}
+                  ${
+                    form?.tools?.[tool?.id]
+                      ? "border-blue-500 bg-blue-50 text-blue-700"
+                      : "border-gray-200 text-gray-700 hover:border-gray-300"
+                  }`}
               >
-                {tool.name}
+                {tool?.name}
               </button>
             ))}
 
@@ -159,9 +188,9 @@ export default function AuditForm() {
           </div>
 
           {/* Per Tool Details */}
-          {Object.keys(form.tools).map((toolId) => {
-            const tool = TOOLS.find((t) => t.id === toolId);
-            const toolData = form.tools[toolId];
+          {Object?.keys(form?.tools || {}).map((toolId) => {
+            const tool = TOOLS.find((t) => t?.id === toolId);
+            const toolData = form?.tools?.[toolId] || {};
             if (!tool) return null;
             return (
               <div
@@ -175,18 +204,27 @@ export default function AuditForm() {
                       Plan
                     </label>
                     <select
-                      value={toolData.planId}
+                      placeholder="Select one Plan Id"
+                      value={toolData?.planId || ""}
                       onChange={(e) =>
                         handleToolChange(toolId, "planId", e.target.value)
                       }
                       className="select select-primary"
                     >
+                      <option value="" disabled>
+                        Select one Plan Id
+                      </option>
                       {tool.plans.map((p) => (
                         <option key={p.id} value={p.id}>
                           {p.name} — {p.description}
                         </option>
                       ))}
                     </select>
+                    {errors?.toolData?.[toolId]?.planId && (
+                      <p className="text-red-400 text-xs font-normal">
+                        {errors.toolData[toolId].planId}
+                      </p>
+                    )}
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="block text-xs text-gray-500 mb-1">
@@ -201,9 +239,9 @@ export default function AuditForm() {
                       }
                       className="input input-primary"
                     />
-                    {errors?.toolData?.seats && (
+                    {errors?.toolData?.[toolId]?.seats && (
                       <p className="text-red-400 text-xs font-normal">
-                        {errors?.toolData.seats}
+                        {errors.toolData[toolId].seats}
                       </p>
                     )}
                   </div>
@@ -221,6 +259,11 @@ export default function AuditForm() {
                       }
                       className="input input-primary"
                     />
+                    {errors?.toolData?.[toolId]?.monthlySpend && (
+                      <p className="text-red-400 text-xs font-normal">
+                        {errors.toolData[toolId].monthlySpend}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
