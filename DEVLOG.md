@@ -85,3 +85,27 @@
 * Calculate monthly and yearly savings
 * Generate recommendation cards based on user inputs
 * Start connecting form data to the results page
+
+## Day 4 — 2026-05-22
+
+**Hours worked:** 6
+
+**What I did:**
+- Built complete audit engine with logic for all 6 tools
+- Added overlap detection for redundant tools
+- Built results page with per-tool breakdown
+- Added hero savings section and Credex CTA
+- Connected form → results flow via React Router
+- Wrote 5 unit tests for audit engine
+
+**What I learned:**
+- How to write defensible audit logic with real reasoning
+- Importance of handling edge cases (free plans, single users)
+
+**Blockers / what I'm stuck on:**
+- Need Anthropic API key to add AI summary tomorrow
+
+**Plan for tomorrow:**
+- Add AI-generated personalized summary via Anthropic API
+- Add lead capture email form
+- Generate unique shareable URL per audit
