@@ -1,14 +1,26 @@
 import { useState, useEffect } from "react";
 import { TOOLS, USE_CASES } from "../engine/pricingData";
+import { useNavigate } from "react-router-dom";
 
 export default function AuditForm() {
-  const [form, setForm] = useState({ teamSize: "", useCase: "", tools: {} });
+  const DEFAULT_FORM = {
+    teamSize: "",
+    useCase: "",
+    tools: {},
+  };
+
+  const [form, setForm] = useState(() => {
+    const saved = localStorage.getItem("auditForm");
+    return saved ? JSON.parse(saved) : DEFAULT_FORM;
+  });
 
   const [errors, setErrors] = useState({});
 
-  // useEffect(() => {
-  //   localStorage.setItem("auditForm", JSON.stringify(form));
-  // }, [form]);
+  useEffect(() => {
+    localStorage.setItem("auditForm", JSON.stringify(form));
+  }, [form]);
+
+  const navigate = useNavigate();
 
   const handleToolToggle = (toolId) => {
     setForm((prev) => {
@@ -33,15 +45,10 @@ export default function AuditForm() {
   };
 
   const handleSubmit = () => {
-    if (!validate()) {
-      return;
-    }
-    console.log("form", form);
-    // if (Object.keys(form.tools).length === 0) {
-    //   alert("Please select at least one AI tool");
-    //   return;
-    // }
-    setForm({});
+    if (!validate()) return;
+
+    localStorage.setItem("auditForm", JSON.stringify(form));
+    navigate("/results");
   };
 
   const validate = () => {
