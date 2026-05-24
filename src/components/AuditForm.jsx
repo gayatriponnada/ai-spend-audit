@@ -101,8 +101,8 @@ export default function AuditForm() {
     return Object.keys(newError).length === 0;
   };
   return (
-    <div className="flex flex-col items-center   gap-4  ">
-      <div className="flex flex-col   gap-4 ">
+    <div className="flex flex-col items-center gap-4 px-4 py-8">
+  <div className="w-full max-w-2xl flex flex-col gap-4">
         <h1 className="text-3xl text-center font-bold text-gray-900">
           AI Spend Audit
         </h1>
