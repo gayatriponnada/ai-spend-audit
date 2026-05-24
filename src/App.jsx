@@ -3,6 +3,7 @@ import Layout from "./utils/Layout";
 import AuditForm from "./components/AuditForm";
 import Home from "./pages/Home";
 import Results from "./pages/Results";
+import Share from "./pages/Share";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Home/>} />
          <Route path="/audit" element={<AuditForm />} />
           <Route path="/results" element={<Results />} />
+          <Route path="/share/:auditId" element={<Share />} />
         </Route>
       </Routes>
     </>
