@@ -26,7 +26,7 @@
 - Collect all pricing data with official URLs
 
 
-## Day 2 — 2026-05-21
+## Day 2 — 2026-05-22
 
 **Hours worked:** 4
 
@@ -86,7 +86,7 @@
 * Generate recommendation cards based on user inputs
 * Start connecting form data to the results page
 
-## Day 4 — 2026-05-22
+## Day 4 — 2026-05-23
 
 **Hours worked:** 6
 
@@ -109,3 +109,32 @@
 - Add AI-generated personalized summary via Anthropic API
 - Add lead capture email form
 - Generate unique shareable URL per audit
+
+## Day 5 — 2026-05-24
+
+**Hours worked:** 5
+
+**What I did:**
+- Integrated Anthropic API for AI-generated audit summary
+- Added graceful fallback if API call fails
+- Built email capture form with Supabase storage
+- Added honeypot field for basic bot protection
+- Generated unique audit ID per submission
+- Built shareable public URL at /share/:auditId
+- Created Share page — strips personal info, shows savings + AI summary
+- Added Copy Link button for easy sharing
+- Wrote PROMPTS.md with full prompt reasoning
+
+**What I learned:**
+- How to call Anthropic API directly from browser with proper headers
+- Importance of fallback for API failures
+- How to generate unique IDs for shareable URLs
+
+**Blockers / what I'm stuck on:**
+- Need to add Open Graph meta tags for proper link previews
+
+**Plan for tomorrow:**
+- Add Open Graph meta tags to Share page
+- Polish overall UI
+- Set up GitHub Actions CI
+- Write all remaining markdown files
