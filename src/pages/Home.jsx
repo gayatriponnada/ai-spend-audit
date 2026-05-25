@@ -1,4 +1,3 @@
-import React from "react";
 import DetailsOfAudit from "../components/home/DetailsOfAudit";
 import { useNavigate } from "react-router-dom";
 
@@ -6,7 +5,8 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col gap-8 w-full max-w-4xl mx-auto px-4 py-8">
+    <div className="flex flex-col gap-8 max-w-6xl mx-auto w-full">
+
       {/* Hero Section */}
       <div className="flex flex-col gap-4 py-2 sm:py-2">
         <div className="text-2xl sm:text-3xl lg:text-4xl w-full sm:w-[70%] lg:w-[50%] font-semibold leading-snug">
@@ -15,8 +15,8 @@ const Home = () => {
         </div>
 
         <div className="text-sm sm:text-base text-gray-600 w-full sm:w-[60%]">
-          Get a free audit of your AI subscriptions and discover hidden savings
-          in seconds.
+          Get a free audit of your AI subscriptions and discover
+          hidden savings in seconds.
         </div>
 
         <div className="flex flex-wrap gap-4 items-center">
@@ -43,6 +43,7 @@ const Home = () => {
 
       {/* How it works */}
       <DetailsOfAudit />
+
     </div>
   );
 };

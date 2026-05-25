@@ -41,34 +41,37 @@ export default function Results() {
   const [emailDone, setEmailDone] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("auditForm");
-    if (!saved) {
-      navigate("/audit");
-      return;
-    }
+useEffect(() => {
+  const saved = localStorage.getItem("auditForm");
+  if (!saved) {
+    navigate("/audit");
+    return;
+  }
 
-    const formData = JSON.parse(saved);
-    const auditResult = runAudit(formData);
-    const overlapResult = detectOverlap(formData.tools);
+  const formData = JSON.parse(saved);
+  const auditResult = runAudit(formData);
+  const overlapResult = detectOverlap(formData.tools);
+  const lastId = localStorage.getItem("lastAuditId");
+
+  // Compute everything first, then batch all setState calls together
+  Promise.resolve().then(() => {
     setAudit(auditResult);
     setOverlaps(overlapResult);
 
-    // Generate AI summary
-    generateAISummary(auditResult).then((summary) => {
-      setAiSummary(summary);
-      setSummaryLoading(false);
-      // Store summary in audit for email capture
-      auditResult.aiSummary = summary;
-    });
-
-    // Check if already submitted email
-    const lastId = localStorage.getItem("lastAuditId");
     if (lastId) {
       setShareUrl(`${window.location.origin}/share/${lastId}`);
       setEmailDone(true);
     }
-  }, []);
+  });
+
+  // Generate AI summary separately
+  generateAISummary(auditResult).then((summary) => {
+    setAiSummary(summary);
+    setSummaryLoading(false);
+    auditResult.aiSummary = summary;
+  });
+
+}, [navigate]);
 
   const handleEmailSuccess = (auditId) => {
     const url = `${window.location.origin}/share/${auditId}`;
