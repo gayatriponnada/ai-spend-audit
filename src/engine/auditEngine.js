@@ -1,4 +1,4 @@
-import { TOOLS } from "./pricingData";
+import { TOOLS } from "./pricingData.js";
 
 // Main function — takes form data, returns audit results
 export function runAudit(formData) {
