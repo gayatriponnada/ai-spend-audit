@@ -1,4 +1,4 @@
-import { runAudit, detectOverlap } from "./auditEngine";
+import { runAudit, detectOverlap } from "./auditEngine.js";
 
 // Test 1 — Cursor Business with 2 seats should recommend downgrade
 function test1() {

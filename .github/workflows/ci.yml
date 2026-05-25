@@ -27,4 +27,4 @@ jobs:
         run: npm run lint
 
       - name: Run tests
-        run: node src/engine/auditEngine.test.js
+        run: node --experimental-vm-modules src/engine/auditEngine.test.js
